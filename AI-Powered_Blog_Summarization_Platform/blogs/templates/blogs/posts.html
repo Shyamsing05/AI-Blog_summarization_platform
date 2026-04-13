@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+    {% block css_files %}
+
+      <link rel="stylesheet" href="{% static 'blogs/app.css' %}">
+
+    {% endblock %}
+
+    <title>
+
+        {% block page_title %}
+
+           {{post.title}}
+
+        {% endblock %}
+
+    </title>
+
+</head>
+       <h1>{{post.title}} Blog Post</h1>
+<body>
+
+     {% block body_content %}
+     <section>
+        <h2>{{post.title}}</h2>
+         <div>
+             {% for tag in tags %}
+             <span> {{ tag }} </span>
+             {% endfor %}
+         </div>
+         <article>
+
+             <img src="{% static 'blogs/images/'|add:post.image %}" alt="{{post.title}}"/>
+             <address>
+                 By <a href="mailto: {{ post.author.email_addr }}" >{{ post.author }}</a>
+                 </address>
+                 <div>Posted on <time>{{post.date|date:"d M Y"}}</time></div>
+
+
+         </article>
+
+     </section>
+
+       <main>
+           <p>{{post.content}}</p>
+       </main>
+
+     <section>
+         <h2>Comments</h2>
+         <form action="{% url 'blog_post' post.slug %}" method = "POST">
+             {% csrf_token %}
+             {{ comment_form }}
+             <button> Save </button>
+         </form>
+     </section>
+     <section>
+         <h2>Recent Comments :</h2>
+                 <ul>
+                  {% for comment in comments %}
+
+                    <li>   <h3>{{ comment.user_name }}</h3>
+                           <p>{{ comment.comment_text }}</p>
+                    </li>
+                 </ul>
+                  {% endfor %}
+
+         </section>
+     {% endblock %}
+</body>
+</html>
