@@ -7,7 +7,11 @@ INSTALLED_APPS = (
     'blogs',
     'django.contrib.auth',
 )
-
+ALLOWED_HOSTS = [
+    'ai-blog-summarization-platform.onrender.com',
+    'localhost',
+    '127.0.0.1'
+]
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
